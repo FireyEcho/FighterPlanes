@@ -18,11 +18,12 @@ public class Player : MonoBehaviour
 
     public GameObject bullet;
     public GameObject explosion;
+    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject.Find("GameManager").GetComponent<GameManager>().updateLives(lives);
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -74,9 +75,10 @@ public class Player : MonoBehaviour
         lives--;
         if (lives == 0)
         {
-            Destroy(this.gameObject);
+            gameManager.GameOver();
             Instantiate(explosion, transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
         }
-        GameObject.Find("GameManager").GetComponent<GameManager>().updateLives(lives);
+        gameManager.updateLives(lives);
     }
 }
